@@ -13,6 +13,13 @@ public class Compagnia {
 	public Compagnia() {
 	}
 
+	public Compagnia(String ragioneSociale, int fatturatoAnnuo, Date dataFondazione) {
+		super();
+		this.ragioneSociale = ragioneSociale;
+		this.fatturatoAnnuo = fatturatoAnnuo;
+		this.dataFondazione = dataFondazione;
+	}
+
 	public Compagnia(Long id, String ragioneSociale, int fatturatoAnnuo, Date dataFondazione) {
 		super();
 		this.id = id;

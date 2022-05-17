@@ -12,4 +12,6 @@ public interface CompagniaDAO extends IBaseDAO<Compagnia> {
 	public List<Compagnia> findAllByRagioneSocialeContiene(String stringaDaVerificare) throws Exception;
 
 	public List<Compagnia> findAllByCodiceFiscaleImpiegatoContiene(String stringaDaVerificare) throws Exception;
+
+	public void findByIdEager(Compagnia compagniaInput) throws Exception;
 }

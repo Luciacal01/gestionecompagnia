@@ -3,6 +3,7 @@ package it.prova.gestionecompagnia.model;
 import java.util.Date;
 
 public class Impiegato {
+	private Long id;
 	private String nome;
 	private String cognome;
 	private String codiceFiscale;
@@ -22,6 +23,37 @@ public class Impiegato {
 		this.dataNascita = dataNascita;
 		this.dataAssunzione = dataAssunzione;
 		this.compagnia = compagnia;
+	}
+
+	public Impiegato(Long id, String nome, String cognome, String codiceFiscale, Date dataNascita, Date dataAssunzione,
+			Compagnia compagnia) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale = codiceFiscale;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+		this.compagnia = compagnia;
+	}
+
+	public Impiegato(Long id, String nome, String cognome, String codiceFiscale, Date dataNascita,
+			Date dataAssunzione) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cognome = cognome;
+		this.codiceFiscale = codiceFiscale;
+		this.dataNascita = dataNascita;
+		this.dataAssunzione = dataAssunzione;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getNome() {
