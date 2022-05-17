@@ -1,4 +1,4 @@
-package it.prova.dao.gestionecompagnia.compagnia;
+package it.prova.gestionecompagnia.dao.compagnia;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;

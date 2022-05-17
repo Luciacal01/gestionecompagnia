@@ -8,10 +8,10 @@ import java.util.List;
 
 import javax.management.RuntimeErrorException;
 
-import it.prova.dao.gestionecompagnia.compagnia.CompagniaDAO;
-import it.prova.dao.gestionecompagnia.compagnia.CompagniaDAOImpl;
 import it.prova.gestionecompagnia.connection.MyConnection;
 import it.prova.gestionecompagnia.dao.Constants;
+import it.prova.gestionecompagnia.dao.compagnia.CompagniaDAO;
+import it.prova.gestionecompagnia.dao.compagnia.CompagniaDAOImpl;
 import it.prova.gestionecompagnia.dao.impiegato.ImpiegatoDAO;
 import it.prova.gestionecompagnia.dao.impiegato.ImpiegatoDAOImpl;
 import it.prova.gestionecompagnia.model.Compagnia;

@@ -1,4 +1,4 @@
-package it.prova.dao.gestionecompagnia.compagnia;
+package it.prova.gestionecompagnia.dao.compagnia;
 
 import java.util.Date;
 import java.util.List;
