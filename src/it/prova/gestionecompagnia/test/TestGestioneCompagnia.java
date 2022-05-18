@@ -42,7 +42,9 @@ public class TestGestioneCompagnia {
 			// testDeleteCompagnia(companiaDAOInstance, impiegatoDAOInstance);
 
 			// testFindByExampleCompagnia(companiaDAOInstance);
-			testFindAllByDataAssunzioneMaggioreDi(companiaDAOInstance);
+			// testFindAllByDataAssunzioneMaggioreDi(companiaDAOInstance);
+			// testFindAllByRagioneSocialeContiene(companiaDAOInstance);
+			testFindAllByCodiceFiscaleContiene(companiaDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -150,6 +152,36 @@ public class TestGestioneCompagnia {
 		}
 
 		System.out.println("..........testFindAllByDataAssunzioneMaggioreDi fine........");
+
+	}
+
+	public static void testFindAllByRagioneSocialeContiene(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println("..........testFindAllByRagioneSocialeContiene inizio........");
+		String iniziali = "li";
+		List<Compagnia> compagnieRagioneSocialeContenente = compagniaDAOInstance
+				.findAllByRagioneSocialeContiene(iniziali);
+		if (compagnieRagioneSocialeContenente.size() < 0)
+			throw new Exception("FindAllByRagioneSocialeContiene: FAILED, non ci sono compagnie conteneti li");
+		for (Compagnia compagniaItem : compagnieRagioneSocialeContenente) {
+			System.out.println(compagniaItem.getId() + " " + compagniaItem.getRagioneSociale());
+		}
+
+		System.out.println("..........FindAllByRagioneSocialeContiene fine........");
+
+	}
+
+	public static void testFindAllByCodiceFiscaleContiene(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println("..........testFindAllByCodiceFiscaleContiene inizio........");
+		String iniziali = "kj";
+		List<Compagnia> compagnieConCodiceFiscaleContenente = compagniaDAOInstance
+				.findAllByCodiceFiscaleImpiegatoContiene(iniziali);
+		if (compagnieConCodiceFiscaleContenente.size() < 0)
+			throw new Exception("testFindAllByCodiceFiscaleContiene: FAILED, non ci sono compagnie conteneti H");
+		for (Compagnia compagniaItem : compagnieConCodiceFiscaleContenente) {
+			System.out.println(compagniaItem.getId() + " " + compagniaItem.getRagioneSociale());
+		}
+
+		System.out.println("..........testFindAllByCodiceFiscaleContiene fine........");
 
 	}
 

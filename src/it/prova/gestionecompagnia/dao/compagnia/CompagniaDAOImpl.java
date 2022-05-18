@@ -221,7 +221,7 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 		List<Compagnia> listaCompagnieConDataAssunzionaMaggioreDi = new ArrayList<Compagnia>();
 		Compagnia results = null;
 		try (PreparedStatement ps = connection.prepareStatement(
-				"select * from compagnia c inner join impiegato i on c.id=i.compagnia_id where i.dataassunzione>?;")) {
+				"select distinct c.* from compagnia c inner join impiegato i on c.id=i.compagnia_id where i.dataassunzione>?;")) {
 			ps.setDate(1, new java.sql.Date(dataAssunzioneInput.getTime()));
 			try (ResultSet rs = ps.executeQuery()) {
 				while (rs.next()) {
@@ -251,19 +251,56 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 		if (stringaDaVerificare == null || stringaDaVerificare.isEmpty())
 			throw new Exception("Valore di input non ammesso.");
 		List<Compagnia> elencoUserCompagniaContiene = new ArrayList<Compagnia>();
-		Compagnia result = null;
+		Compagnia results = null;
 		try (PreparedStatement ps = connection
-				.prepareStatement("select * from compagnia where ragionesociale like ?")) {
+				.prepareStatement("select distinct c.* from compagnia c where ragionesociale like ?")) {
 			ps.setString(1, "%" + stringaDaVerificare + "%");
-		}
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				results = new Compagnia();
+				results.setId(rs.getLong("ID"));
+				results.setRagioneSociale(rs.getString("RAGIONESOCIALE"));
+				results.setFatturatoAnnuo(rs.getInt("FATTURATOANNUO"));
+				results.setDataFondazione(rs.getDate("DATAFONDAZIONE"));
 
+				elencoUserCompagniaContiene.add(results);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
 		return elencoUserCompagniaContiene;
 	}
 
 	@Override
 	public List<Compagnia> findAllByCodiceFiscaleImpiegatoContiene(String stringaDaVerificare) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+
+		if (stringaDaVerificare == null || stringaDaVerificare.isEmpty())
+			throw new Exception("Valore di input non ammesso.");
+		List<Compagnia> elencoCodiceFiscaleContiene = new ArrayList<Compagnia>();
+		Compagnia results = null;
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select distinct c.* from compagnia c inner join impiegato i on c.id=i.compagnia_id where i.codicefiscale like ?")) {
+			ps.setString(1, "%" + stringaDaVerificare + "%");
+			ResultSet rs = ps.executeQuery();
+			while (rs.next()) {
+				results = new Compagnia();
+				results.setId(rs.getLong("ID"));
+				results.setRagioneSociale(rs.getString("RAGIONESOCIALE"));
+				results.setFatturatoAnnuo(rs.getInt("FATTURATOANNUO"));
+				results.setDataFondazione(rs.getDate("DATAFONDAZIONE"));
+
+				elencoCodiceFiscaleContiene.add(results);
+			}
+
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+		return elencoCodiceFiscaleContiene;
 	}
 
 }
