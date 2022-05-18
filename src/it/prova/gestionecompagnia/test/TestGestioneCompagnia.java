@@ -45,7 +45,8 @@ public class TestGestioneCompagnia {
 			// testFindAllByDataAssunzioneMaggioreDi(companiaDAOInstance);
 			// testFindAllByRagioneSocialeContiene(companiaDAOInstance);
 			// testFindAllByCodiceFiscaleContiene(companiaDAOInstance);
-			testFindAllByCompagnia(companiaDAOInstance, impiegatoDAOInstance);
+			// testFindAllByCompagnia(companiaDAOInstance, impiegatoDAOInstance);
+			testCountByDataFondazioneCompagniaRatherThan(impiegatoDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -202,6 +203,19 @@ public class TestGestioneCompagnia {
 					impiegatoItem.getId() + " ha nome: " + impiegatoItem.getNome() + impiegatoItem.getCognome());
 		}
 
+	}
+
+	public static void testCountByDataFondazioneCompagniaRatherThan(ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
+		System.out.println("...........testCountByDataFondazioneCompagniaRatherThan inizio...........");
+		Date dataFondazioneDaConfrontare = new SimpleDateFormat("dd-MM-yyyy").parse("09-05-2022");
+
+		int contatore = impiegatoDAOInstance.countByDataFondazioneCompagniaRatherThan(dataFondazioneDaConfrontare);
+		if (contatore == 0) {
+			System.out.println("........TestCountByDataFondazioneCompagniaRatherThan: FAILED................");
+		}
+
+		System.out.println(contatore);
 	}
 
 }
