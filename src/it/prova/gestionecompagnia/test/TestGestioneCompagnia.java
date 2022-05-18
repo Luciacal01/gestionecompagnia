@@ -40,7 +40,9 @@ public class TestGestioneCompagnia {
 			// testUpdateCompagnia(companiaDAOInstance);
 			// testUpdateImpiegato(impiegatoDAOInstance);
 			// testDeleteCompagnia(companiaDAOInstance, impiegatoDAOInstance);
-			testFindByExampleCompagnia(companiaDAOInstance);
+
+			// testFindByExampleCompagnia(companiaDAOInstance);
+			testFindAllByDataAssunzioneMaggioreDi(companiaDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -59,8 +61,10 @@ public class TestGestioneCompagnia {
 			throws Exception {
 		System.out.println("..........inizio testInsertImpiegato........");
 		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
-		int quantiElementiInseriti = impiegatoDAOInstance.insert(new Impiegato(null, "Giulia", "Ciztro",
-				"GLUCZR59G689KASDKJ", new Date(), new Date(), listaCompagnie.get(3)));
+		Date dataNascita = new SimpleDateFormat("dd-MM-yyyy").parse("18-05-1995");
+		Date dataAssunzione = new SimpleDateFormat("dd-MM-yyyy").parse("23-04-2019");
+		int quantiElementiInseriti = impiegatoDAOInstance.insert(new Impiegato(null, "Marta", "Fresh",
+				"MRTFRS95B620KBXAKJN", dataNascita, dataAssunzione, listaCompagnie.get(3)));
 		if (quantiElementiInseriti < 1)
 			throw new RuntimeException("testInsertElementi: FAILED");
 		System.out.println("..........inizio testInsertElementi: PASSED.......");
@@ -131,6 +135,22 @@ public class TestGestioneCompagnia {
 					+ compagniaItem.getDataFondazione());
 
 		}
+	}
+
+	public static void testFindAllByDataAssunzioneMaggioreDi(CompagniaDAO compagniaDAOInstance) throws Exception {
+		System.out.println("..........testFindAllByDataAssunzioneMaggioreDi inizio........");
+		Date dataAssunzione = new SimpleDateFormat("dd-MM-yyyy").parse("01-01-2021");
+		List<Compagnia> compagnieConDataAssunzioneMAggioreDi = compagniaDAOInstance
+				.findAllByDataAssunzioneMaggioreDi(dataAssunzione);
+		if (compagnieConDataAssunzioneMAggioreDi.size() < 0)
+			throw new Exception(
+					"testFindAllByDataAssunzioneMaggioreDi: FAILED, non ci sono compagnie maggiore di questa data di assunzione ");
+		for (Compagnia compagniaItem : compagnieConDataAssunzioneMAggioreDi) {
+			System.out.println(compagniaItem.getId() + " " + compagniaItem.getRagioneSociale());
+		}
+
+		System.out.println("..........testFindAllByDataAssunzioneMaggioreDi fine........");
+
 	}
 
 }

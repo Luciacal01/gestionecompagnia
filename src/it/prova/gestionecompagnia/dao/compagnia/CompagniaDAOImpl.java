@@ -216,14 +216,48 @@ public class CompagniaDAOImpl extends AbstractMySQLDAO implements CompagniaDAO {
 
 	@Override
 	public List<Compagnia> findAllByDataAssunzioneMaggioreDi(Date dataAssunzioneInput) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+		List<Compagnia> listaCompagnieConDataAssunzionaMaggioreDi = new ArrayList<Compagnia>();
+		Compagnia results = null;
+		try (PreparedStatement ps = connection.prepareStatement(
+				"select * from compagnia c inner join impiegato i on c.id=i.compagnia_id where i.dataassunzione>?;")) {
+			ps.setDate(1, new java.sql.Date(dataAssunzioneInput.getTime()));
+			try (ResultSet rs = ps.executeQuery()) {
+				while (rs.next()) {
+					results = new Compagnia();
+					results.setId(rs.getLong("ID"));
+					results.setRagioneSociale(rs.getString("RAGIONESOCIALE"));
+					results.setFatturatoAnnuo(rs.getInt("FATTURATOANNUO"));
+					results.setDataFondazione(rs.getDate("DATAFONDAZIONE"));
+
+					listaCompagnieConDataAssunzionaMaggioreDi.add(results);
+				}
+
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			throw e;
+		}
+
+		return listaCompagnieConDataAssunzionaMaggioreDi;
 	}
 
 	@Override
 	public List<Compagnia> findAllByRagioneSocialeContiene(String stringaDaVerificare) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		if (isNotActive())
+			throw new Exception("Connessione non attiva. Impossibile effettuare operazioni DAO.");
+
+		if (stringaDaVerificare == null || stringaDaVerificare.isEmpty())
+			throw new Exception("Valore di input non ammesso.");
+		List<Compagnia> elencoUserCompagniaContiene = new ArrayList<Compagnia>();
+		Compagnia result = null;
+		try (PreparedStatement ps = connection
+				.prepareStatement("select * from compagnia where ragionesociale like ?")) {
+			ps.setString(1, "%" + stringaDaVerificare + "%");
+		}
+
+		return elencoUserCompagniaContiene;
 	}
 
 	@Override
