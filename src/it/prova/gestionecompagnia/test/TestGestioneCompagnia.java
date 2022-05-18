@@ -39,6 +39,7 @@ public class TestGestioneCompagnia {
 
 			// testUpdateCompagnia(companiaDAOInstance);
 			// testUpdateImpiegato(impiegatoDAOInstance);
+			testDeleteImpiegato(impiegatoDAOInstance);
 			// testDeleteCompagnia(companiaDAOInstance, impiegatoDAOInstance);
 
 			// testFindByExampleCompagnia(companiaDAOInstance);
@@ -48,7 +49,7 @@ public class TestGestioneCompagnia {
 			// testFindAllByCompagnia(companiaDAOInstance, impiegatoDAOInstance);
 			// testCountByDataFondazioneCompagniaRatherThan(impiegatoDAOInstance);
 			// testFindAllByCompagniaConFatturatoMaggioreDi(impiegatoDAOInstance);
-			testFindAllErrorAssunzione(impiegatoDAOInstance);
+			// testFindAllErrorAssunzione(impiegatoDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -114,15 +115,7 @@ public class TestGestioneCompagnia {
 		Compagnia compagniaDaRimuovere = listaCompagnie.get(3);
 		compagniaDAOInstance.findByIdEager(compagniaDaRimuovere);
 
-		if (compagniaDaRimuovere.getImpiegati().size() > 0) {
-			for (Impiegato impiegatoItem : compagniaDaRimuovere.getImpiegati()) {
-				impiegatoDAOInstance.delete(impiegatoItem);
-				compagniaDaRimuovere.getImpiegati().remove(impiegatoItem);
-			}
-			compagniaCancellata = compagniaDAOInstance.delete(compagniaDaRimuovere);
-		} else {
-			compagniaCancellata = compagniaDAOInstance.delete(compagniaDaRimuovere);
-		}
+		compagniaDAOInstance.delete(compagniaDaRimuovere);
 
 		if (compagniaCancellata < 1)
 			throw new RuntimeException("testDeleteCompagnia: FAILED, l'appartamento non è stato cancellato");
@@ -156,6 +149,16 @@ public class TestGestioneCompagnia {
 		}
 
 		System.out.println("..........testFindAllByDataAssunzioneMaggioreDi fine........");
+
+	}
+
+	public static void testDeleteImpiegato(ImpiegatoDAO impiegatoDAOInstance) throws Exception {
+		System.out.println(".......testDeleteImpiegato inizio.......");
+
+		int compagniaCancellata = 0;
+		List<Impiegato> impiegatoDaCancellare = impiegatoDAOInstance.list();
+		Impiegato impDaCancellare = impiegatoDaCancellare.get(8);
+		impiegatoDAOInstance.delete(impDaCancellare);
 
 	}
 
