@@ -46,7 +46,9 @@ public class TestGestioneCompagnia {
 			// testFindAllByRagioneSocialeContiene(companiaDAOInstance);
 			// testFindAllByCodiceFiscaleContiene(companiaDAOInstance);
 			// testFindAllByCompagnia(companiaDAOInstance, impiegatoDAOInstance);
-			testCountByDataFondazioneCompagniaRatherThan(impiegatoDAOInstance);
+			// testCountByDataFondazioneCompagniaRatherThan(impiegatoDAOInstance);
+			// testFindAllByCompagniaConFatturatoMaggioreDi(impiegatoDAOInstance);
+			testFindAllErrorAssunzione(impiegatoDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -216,6 +218,31 @@ public class TestGestioneCompagnia {
 		}
 
 		System.out.println(contatore);
+	}
+
+	public static void testFindAllByCompagniaConFatturatoMaggioreDi(ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
+		System.out.println("_-------------testfindAllByCompagniaConFatturatoMaggioreDi");
+
+		List<Impiegato> result = impiegatoDAOInstance.findAllByCompagniaConFatturatoMaggioreDi(780000);
+
+		for (Impiegato impiegatoItem : result) {
+			System.out.println(impiegatoItem.getNome());
+		}
+
+		System.out.println("---------findAllByCompagniaConFatturatoMaggioreDi PASSED-----------");
+	}
+
+	public static void testFindAllErrorAssunzione(ImpiegatoDAO impiegatoDAOInstance) throws Exception {
+		System.out.println("-------------testFindAllByErroriAssunzione-----------");
+
+		List<Impiegato> result = impiegatoDAOInstance.findAllErrorAssunzione();
+
+		for (Impiegato impiegatoItem : result) {
+			System.out.println(impiegatoItem.getNome());
+		}
+
+		System.out.println("---------testFindAllByErroriAssunzione PASSED-----------");
 	}
 
 }
