@@ -44,7 +44,8 @@ public class TestGestioneCompagnia {
 			// testFindByExampleCompagnia(companiaDAOInstance);
 			// testFindAllByDataAssunzioneMaggioreDi(companiaDAOInstance);
 			// testFindAllByRagioneSocialeContiene(companiaDAOInstance);
-			testFindAllByCodiceFiscaleContiene(companiaDAOInstance);
+			// testFindAllByCodiceFiscaleContiene(companiaDAOInstance);
+			testFindAllByCompagnia(companiaDAOInstance, impiegatoDAOInstance);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,6 +183,24 @@ public class TestGestioneCompagnia {
 		}
 
 		System.out.println("..........testFindAllByCodiceFiscaleContiene fine........");
+
+	}
+
+	public static void testFindAllByCompagnia(CompagniaDAO compagniaDAOInstance, ImpiegatoDAO impiegatoDAOInstance)
+			throws Exception {
+		System.out.println(".............testFindAllByCompagnia............");
+		List<Compagnia> listaCompagnie = compagniaDAOInstance.list();
+		if (listaCompagnie.size() < 1) {
+			System.out.println("..........TestFindAllByCompagnia FAILED..........");
+		}
+		List<Impiegato> impiegatiDellaCompagnia = impiegatoDAOInstance.findAllByCompagnia(listaCompagnie.get(0));
+		if (impiegatiDellaCompagnia.size() < 1) {
+			System.out.println("..........TestFindAllByCompagnia FAILED..........");
+		}
+		for (Impiegato impiegatoItem : impiegatiDellaCompagnia) {
+			System.out.println(
+					impiegatoItem.getId() + " ha nome: " + impiegatoItem.getNome() + impiegatoItem.getCognome());
+		}
 
 	}
 
